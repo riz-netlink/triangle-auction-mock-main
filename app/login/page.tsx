@@ -6,46 +6,51 @@ import Link from "next/link"
 import Image from "next/image"
 import { LanguageSwitcher } from "@/components/language-switcher"
 import { I18nProvider } from "@/components/i18n"
-import { useState } from "react"
+import { useState, ReactNode } from "react"
 import { Eye, EyeOff } from "lucide-react"
+
+interface I18nProviderProps {
+  children: ReactNode;
+}
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
 
   return (
     <I18nProvider>
-      <div className="w-full lg:grid lg:h-screen lg:grid-cols-[3fr_2fr]">
-        {/* Language Switcher in top-right corner */}
-        <div className="absolute right-4 top-4 z-10">
-          <LanguageSwitcher />
-        </div>
-        <div className="flex items-center justify-center py-12">
-          <div className="absolute left-4 top-4">
+      <div className="grid h-screen grid-cols-1 lg:grid-cols-[3fr_2fr] gap-0">
+        {/* Left Column */}
+        <div className="flex flex-col">
+          {/* Header */}
+          <header className="sticky top-0 z-10 flex items-center justify-between bg-white px-4 py-4">
             <Image
               src="/images/triangle-logo.png"
               alt="Triangle Logo"
-              height="56"
+              height="40"
               width="0"
               style={{ width: 'auto', maxHeight: '56px' }}
             />
-          </div>
-          <div className="mx-auto grid w-[350px] gap-6">
-            <div className="grid gap-2 text-left">
-              <h1 className="text-3xl font-bold">Welcome</h1>
-              <p className="text-balance text-muted-foreground">
-                Log in to your <b>Triangle Liquidators</b> account.
-              </p>
-            </div>
-            <div>
+            <LanguageSwitcher />
+          </header>
+
+          {/* Login Form */}
+          <main className="flex flex-1 items-center justify-center px-4">
+            <div className="w-full max-w-md space-y-6">
+              <div className="text-left">
+                <h1 className="text-3xl font-bold">Welcome</h1>
+                <p className="text-muted-foreground">
+                  Log in to your <b>Triangle Liquidators</b> account.
+                </p>
+              </div>
               <form>
-                <div className="grid gap-4">
-                  <div className="grid gap-2">
-                    <Label htmlFor="email">Email</Label>
+                <div className="space-y-4">
+                  <div>
+                    <Label htmlFor="email" className="mb-1 block">Email</Label>
                     <Input id="email" type="email" placeholder="m@example.com" required className="rounded-[6px] border-zinc-300" />
                   </div>
-                  <div className="grid gap-2">
-                    <Label htmlFor="password">Password</Label>
-                    <div className="relative">
+                  <div>
+                    <Label htmlFor="password" className="mb-1 block">Password</Label>
+                    <div className="relative mb-4">
                       <Input 
                         id="password" 
                         type={showPassword ? "text" : "password"} 
@@ -65,32 +70,37 @@ export default function LoginPage() {
                       Forgot your password?
                     </Link>
                   </div>
-                  <Button type="submit" className="w-full rounded-[6px]">
+                  <Button type="submit" className="w-full h-10 rounded-[6px]">
                     Login
                   </Button>
-                  <Button variant="outline" className="w-full rounded-[6px] border-none bg-white text-zinc-900 shadow-none hover:bg-white hover:underline" asChild>
+                  <Button variant="link" className="w-full h-10 text-zinc-900 hover:underline" asChild>
                     <Link href="/">Cancel</Link>
                   </Button>
                 </div>
               </form>
-              <div className="mt-4 text-center text-sm">
-                Don&apos;t have an account?{" "}
-                <Link href="/register" className="underline">
-                  Register
-                </Link>
+              <div className="text-center text-sm">
+                Don&apos;t have an account? <Link href="/register" className="underline">Register</Link>
               </div>
             </div>
-          </div>
+          </main>
+
+          {/* Footer */}
+          <footer className="sticky bottom-0 bg-white px-4 py-6 text-sm text-center lg:text-left">
+            <Link href="#" className="mr-4 underline">Privacy Policy</Link>
+            <Link href="#" className="underline">Terms & Conditions</Link>
+          </footer>
         </div>
-        <div className="hidden bg-muted lg:block relative">
+
+        {/* Right Column */}
+        <div className="relative hidden lg:block">           
           <Image
             src="/overstock-materials-auction-pallets.png"
-            alt="Image"
-            width="1920"
-            height="1080"
-            className="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+            alt="Background Image"
+            layout="fill"
+            objectFit="cover"
+            className="brightness-50"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black to-transparent opacity-50"></div>
+          <div className="absolute inset-0 bg-black opacity-30"></div>
         </div>
       </div>
     </I18nProvider>
