@@ -7,7 +7,7 @@ import Image from "next/image"
 import { LanguageSwitcher } from "@/components/language-switcher"
 import { I18nProvider } from "@/components/i18n"
 import { useState, ReactNode } from "react"
-import { Eye, EyeOff } from "lucide-react"
+import { Eye, EyeOff, SquareArrowOutUpRight } from "lucide-react"
 
 interface I18nProviderProps {
   children: ReactNode;
@@ -86,8 +86,11 @@ export default function LoginPage() {
 
           {/* Footer */}
           <footer className="sticky bottom-0 bg-white px-4 py-6 text-sm text-center lg:text-left">
-            <Link href="#" className="mr-4 underline">Privacy Policy</Link>
-            <Link href="#" className="underline">Terms & Conditions</Link>
+            <Link href="#" className="mr-4 underline inline-flex items-center gap-1">
+              Privacy Policy
+              <SquareArrowOutUpRight size={16} />
+            </Link>
+            <Link href="#" className="mr-4 underline inline-flex items-center gap-1">Terms & Conditions <SquareArrowOutUpRight size={16} /></Link>
           </footer>
         </div>
 
