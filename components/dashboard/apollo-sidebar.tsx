@@ -142,7 +142,7 @@ export function ApolloSidebar() {
         <div className="flex items-center justify-between p-4 h-14 border-b border-gray-100">
           <div className="flex items-center space-x-3">
             <Image
-              src={shouldShowExpanded ? "/images/triangle-logo.png" : "/images/tl-logo.png"}
+              src={shouldShowExpanded ? "/images/triangle-logo.png" : "/images/Logo_triangle_mini.png"}
               alt="Triangle Liquidators"
               width={shouldShowExpanded ? 140 : 32}
               height={shouldShowExpanded ? 32 : 32}
