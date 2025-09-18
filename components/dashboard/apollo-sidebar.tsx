@@ -1,179 +1,239 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, createContext, useContext } from 'react'
+import Image from 'next/image'
 import { 
-  Search, 
-  MessageSquare, 
-  CheckSquare, 
+  Home, 
+  Gavel, 
+  MapPin, 
+  Building2, 
+  Tag, 
+  Users, 
+  UserCheck, 
+  TrendingUp, 
+  Eye, 
   Settings, 
-  Plus, 
-  ChevronDown, 
-  ChevronRight,
-  Pin,
-  PinOff
+  Pin, 
+  PinOff,
+  Menu,
+  X
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
+
+// Create context for sidebar state
+const SidebarContext = createContext<{
+  isPinned: boolean
+  isExpanded: boolean
+}>({
+  isPinned: false,
+  isExpanded: false
+})
+
+export const useSidebar = () => useContext(SidebarContext)
 
 export function ApolloSidebar() {
+  const [isExpanded, setIsExpanded] = useState(false)
   const [isPinned, setIsPinned] = useState(false)
-  const [isHovered, setIsHovered] = useState(false)
-  const [expandedSections, setExpandedSections] = useState<string[]>([])
+  const [isMobileOpen, setIsMobileOpen] = useState(false)
 
-  const shouldShowExpanded = isPinned || isHovered
+  // Auto-collapse on mobile
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        setIsMobileOpen(false)
+      }
+    }
+
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
+  // Update CSS custom property for main content margin
+  useEffect(() => {
+    const root = document.documentElement
+    if (isPinned) {
+      root.style.setProperty('--sidebar-width', '240px') // 60 * 4 = 240px (w-60)
+    } else {
+      root.style.setProperty('--sidebar-width', '64px') // 16 * 4 = 64px (w-16)
+    }
+  }, [isPinned])
+
+  const shouldShowExpanded = isExpanded || isPinned
+
+  const navigationItems = [
+    { icon: Home, label: 'Dashboard', href: '/dashboard', badge: null },
+    { icon: Gavel, label: 'Auctions', href: '/auctions', badge: '97' },
+    { icon: Building2, label: 'Company', href: '/company', badge: null },
+    { icon: Tag, label: 'Categories', href: '/categories', badge: null },
+    { icon: Users, label: 'Partners', href: '/partners', badge: null },
+    { icon: UserCheck, label: 'Users', href: '/users', badge: null },
+    { icon: UserCheck, label: 'Bidders', href: '/bidders', badge: null },
+    { icon: TrendingUp, label: 'Insights', href: '/insights', badge: null },
+    { icon: Eye, label: 'Appearance', href: '/appearance', badge: null },
+  ]
+
+  const handleMouseEnter = () => {
+    if (!isPinned) {
+      setIsExpanded(true)
+    }
+  }
+
+  const handleMouseLeave = () => {
+    if (!isPinned) {
+      setIsExpanded(false)
+    }
+  }
 
   const togglePin = () => {
     setIsPinned(!isPinned)
-  }
-
-  const toggleSection = (section: string) => {
-    setExpandedSections(prev => 
-      prev.includes(section) 
-        ? prev.filter(s => s !== section)
-        : [...prev, section]
-    )
+    if (!isPinned) {
+      setIsExpanded(true)
+    }
   }
 
   return (
-    <>
-      {/* Hover trigger area - invisible strip on the left edge */}
-      <div 
-        className="fixed left-0 top-0 w-4 h-full z-40 bg-transparent"
-        onMouseEnter={() => setIsHovered(true)}
-      />
-      
-      {/* Overlay sidebar */}
-      <div 
-        className={`fixed left-0 top-0 h-full bg-white border-r border-gray-200 flex flex-col transition-all duration-300 ease-in-out z-50 shadow-lg ${
-          shouldShowExpanded ? 'w-64 translate-x-0' : 'w-16 translate-x-0'
-        }`}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
+    <SidebarContext.Provider value={{ isPinned, isExpanded }}>
+      {/* Mobile Menu Button */}
+      <Button
+        variant="ghost"
+        size="sm"
+        className="fixed top-4 left-4 z-50 md:hidden bg-white shadow-md hover:bg-gray-50"
+        onClick={() => setIsMobileOpen(true)}
+        aria-label="Open navigation menu"
       >
-        {/* Header */}
-         <div className="p-4 border-b border-gray-200">
-           <div className="flex items-center justify-between">
-             <div className="flex items-center space-x-3">
-               <div className="w-8 h-8 relative flex-shrink-0">
-                 <img
-                   src="/images/triangle-logo.png"
-                   alt="Triangle Logo"
-                   className="w-full h-full object-contain"
-                 />
-               </div>
-               {shouldShowExpanded && (
-                 <span className="text-lg font-semibold text-gray-900">Triangle</span>
-               )}
-             </div>
-             {shouldShowExpanded && (
-               <Button
-                 variant="ghost"
-                 size="sm"
-                 onClick={togglePin}
-                 className="p-1"
-               >
-                 {isPinned ? (
-                   <PinOff className="w-4 h-4" />
-                 ) : (
-                   <Pin className="w-4 h-4" />
-                 )}
-               </Button>
-             )}
-           </div>
-         </div>
+        <Menu className="h-5 w-5" />
+      </Button>
 
-        {/* Quick Actions */}
-         <div className="p-4 border-b border-gray-200">
-           {shouldShowExpanded ? (
-             <Button className="w-full" size="sm">
-               <Plus className="w-4 h-4 mr-2" />
-               New Search
-             </Button>
-           ) : (
-             <Button 
-               className="w-8 h-8 p-0 mx-auto flex items-center justify-center" 
-               size="sm"
-               title="New Search"
-             >
-               <Plus className="w-4 h-4" />
-             </Button>
-           )}
-         </div>
+      {/* Mobile Overlay */}
+      {isMobileOpen && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
+          onClick={() => setIsMobileOpen(false)}
+          aria-hidden="true"
+        />
+      )}
 
-        {/* Navigation */}
-         <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
-           {/* Search Section */}
-           <div>
-             <button
-               onClick={() => toggleSection('search')}
-               className={`w-full flex items-center ${shouldShowExpanded ? 'justify-between px-3' : 'justify-center px-2'} py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg`}
-               title={!shouldShowExpanded ? "Search" : undefined}
-             >
-               <div className={`flex items-center ${shouldShowExpanded ? 'space-x-3' : ''}`}>
-                 <Search className="w-4 h-4 flex-shrink-0" />
-                 {shouldShowExpanded && <span>Search</span>}
-               </div>
-               {shouldShowExpanded && (
-                 expandedSections.includes('search') ? (
-                   <ChevronDown className="w-4 h-4" />
-                 ) : (
-                   <ChevronRight className="w-4 h-4" />
-                 )
-               )}
-             </button>
-             {expandedSections.includes('search') && shouldShowExpanded && (
-               <div className="ml-6 mt-1 space-y-1">
-                 <button className="w-full flex items-center space-x-3 px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-lg">
-                   <span>People</span>
-                 </button>
-                 <button className="w-full flex items-center space-x-3 px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-lg">
-                   <span>Companies</span>
-                 </button>
-               </div>
-             )}
-           </div>
+      {/* Sidebar */}
+      <aside
+        className={`
+          h-full bg-white border-r border-gray-200 transition-all duration-300 ease-in-out
+          ${isMobileOpen ? 'fixed top-0 left-0 translate-x-0 z-50' : 'fixed top-0 left-0 -translate-x-full z-50'}
+          md:translate-x-0
+          ${shouldShowExpanded ? 'w-60' : 'w-16'}
+          ${isPinned ? 'md:fixed md:z-auto' : 'md:fixed md:z-40 md:shadow-lg'}
+        `}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        role="navigation"
+        aria-label="Main navigation"
+      >
+        {/* Mobile Close Button */}
+        <Button
+          variant="ghost"
+          size="sm"
+          className="absolute top-4 right-4 md:hidden"
+          onClick={() => setIsMobileOpen(false)}
+          aria-label="Close navigation menu"
+        >
+          <X className="h-5 w-5" />
+        </Button>
 
-           {/* Conversations */}
-           <button className={`w-full flex items-center ${shouldShowExpanded ? 'justify-between px-3' : 'justify-center px-2'} py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg`}
-             title={!shouldShowExpanded ? "Conversations" : undefined}
-           >
-             <div className={`flex items-center ${shouldShowExpanded ? 'space-x-3' : ''}`}>
-               <MessageSquare className="w-4 h-4 flex-shrink-0" />
-               {shouldShowExpanded && <span>Conversations</span>}
-             </div>
-             {shouldShowExpanded && (
-               <Badge variant="secondary" className="text-xs">
-                 3
-               </Badge>
-             )}
-           </button>
+        {/* Header with Logo */}
+        <div className="flex items-center justify-between p-4 h-14 border-b border-gray-100">
+          <div className="flex items-center space-x-3">
+            <Image
+              src={shouldShowExpanded ? "/images/triangle-logo.png" : "/images/tl-logo.png"}
+              alt="Triangle Liquidators"
+              width={shouldShowExpanded ? 140 : 32}
+              height={shouldShowExpanded ? 32 : 32}
+              className="transition-all duration-300"
+              priority
+            />
+          </div>
+          
+          {/* Pin Toggle - Only show when expanded */}
+          {shouldShowExpanded && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={togglePin}
+              className="hidden md:flex p-1.5 hover:bg-gray-100 transition-colors rounded-md"
+              title={isPinned ? 'Unpin sidebar' : 'Pin sidebar'}
+              aria-label={isPinned ? 'Unpin sidebar' : 'Pin sidebar'}
+            >
+              {isPinned ? (
+                <PinOff className="h-4 w-4 text-gray-500" />
+              ) : (
+                <Pin className="h-4 w-4 text-gray-500" />
+              )}
+            </Button>
+          )}
+        </div>
 
-           {/* Tasks */}
-           <button className={`w-full flex items-center ${shouldShowExpanded ? 'justify-between px-3' : 'justify-center px-2'} py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg`}
-             title={!shouldShowExpanded ? "Tasks" : undefined}
-           >
-             <div className={`flex items-center ${shouldShowExpanded ? 'space-x-3' : ''}`}>
-               <CheckSquare className="w-4 h-4 flex-shrink-0" />
-               {shouldShowExpanded && <span>Tasks</span>}
-             </div>
-             {shouldShowExpanded && (
-               <Badge variant="secondary" className="text-xs">
-                 7
-               </Badge>
-             )}
-           </button>
-         </nav>
+        {/* Navigation Items */}
+        <nav className="flex-1 p-4 space-y-1" role="menubar">
+          {navigationItems.map((item, index) => {
+            const Icon = item.icon
+            const isActive = item.label === 'Auctions' // Highlight Auctions as active based on the image
+            return (
+              <button
+                key={index}
+                className={`
+                  w-full flex items-center space-x-3 px-3 rounded-lg text-left h-9
+                  transition-colors group relative text-sm
+                  ${shouldShowExpanded ? 'justify-start' : 'justify-center'}
+                  ${isActive 
+                    ? 'bg-gray-100 text-gray-900' 
+                    : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                  }
+                  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2
+                `}
+                title={!shouldShowExpanded ? item.label : undefined}
+                role="menuitem"
+                aria-label={item.label}
+              >
+                <Icon className={`h-4 w-4 flex-shrink-0 ${isActive ? 'text-gray-900' : 'text-gray-600'}`} />
+                {shouldShowExpanded && (
+                  <>
+                    <span className={`font-medium flex-1 text-sm ${isActive ? 'text-gray-900' : 'text-gray-700'}`}>
+                      {item.label}
+                    </span>
+                    {item.badge && (
+                      <span className="bg-gray-200 text-gray-700 text-xs font-medium px-2 py-0.5 rounded-full">
+                        {item.badge}
+                      </span>
+                    )}
+                  </>
+                )}
+                
+                {/* Tooltip for collapsed state */}
+                {!shouldShowExpanded && (
+                  <div className="absolute left-full ml-2 px-2 py-1 bg-gray-900 text-white text-sm rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
+                    {item.label}
+                  </div>
+                )}
+              </button>
+            )
+          })}
+        </nav>
 
-        {/* Settings */}
-        <div className="p-4 border-t border-gray-200">
-          <button className={`w-full flex items-center ${shouldShowExpanded ? 'justify-start px-3 space-x-3' : 'justify-center px-2'} py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg`}
-            title={!shouldShowExpanded ? "Settings" : undefined}
+        {/* Settings at Bottom */}
+        <div className="p-4 border-t border-gray-100">
+          <button
+            className={`
+              w-full flex items-center space-x-3 px-3 py-3 rounded-lg text-left
+              hover:bg-gray-100 transition-colors
+              ${shouldShowExpanded ? 'justify-start' : 'justify-center'}
+              focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2
+            `}
+            title={!shouldShowExpanded ? 'Settings' : undefined}
+            aria-label="Settings"
           >
-            <Settings className="w-4 h-4 flex-shrink-0" />
-            {shouldShowExpanded && <span>Settings</span>}
+            <Settings className="h-5 w-5 text-gray-600" />
+            {shouldShowExpanded && <span className="text-gray-700 font-medium">Settings</span>}
           </button>
         </div>
-      </div>
-    </>
+      </aside>
+    </SidebarContext.Provider>
   )
 }

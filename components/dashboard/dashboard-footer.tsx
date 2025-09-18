@@ -1,34 +1,47 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import Link from 'next/link'
+import { Phone, Mail } from 'lucide-react'
 
-export default function DashboardFooter() {
-  const [currentTime, setCurrentTime] = useState('')
-
-  useEffect(() => {
-    const updateTime = () => {
-      setCurrentTime(new Date().toLocaleTimeString())
-    }
-    
-    updateTime() // Set initial time
-    const interval = setInterval(updateTime, 1000) // Update every second
-    
-    return () => clearInterval(interval)
-  }, [])
-
+export function DashboardFooter() {
   return (
-    <div className="sticky bottom-0 z-40 h-8 bg-gray-100 border-t border-gray-200 flex items-center px-6 text-xs text-gray-600">
-      <div className="flex items-center space-x-4">
-        <span>© 2024 Triangle Liquidators</span>
-        <span className="text-gray-400">|</span>
-        <span>Status: Online</span>
+    <footer className="bg-white border-t border-gray-200 py-4 px-6 mt-auto">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0">
+        {/* Left Section - Contact Info */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-6 space-y-2 sm:space-y-0 text-sm text-gray-600">
+          <div className="flex items-center space-x-2">
+            <Phone className="h-4 w-4" />
+            <span>+1 (555) 123-4567</span>
+          </div>
+          <div className="flex items-center space-x-2">
+            <Mail className="h-4 w-4" />
+            <span>support@triangleauction.com</span>
+          </div>
+        </div>
+
+        {/* Right Section - Links */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-6 space-y-2 sm:space-y-0 text-sm">
+          <div className="flex items-center space-x-4 text-gray-600">
+            <Link 
+              href="/privacy" 
+              className="hover:text-blue-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded"
+              aria-label="Privacy Policy"
+            >
+              Privacy Policy
+            </Link>
+            <Link 
+              href="/terms" 
+              className="hover:text-blue-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded"
+              aria-label="Terms & Conditions"
+            >
+              Terms & Conditions
+            </Link>
+          </div>
+          <div className="text-gray-500">
+            © {new Date().getFullYear()} Triangle Auction. All rights reserved.
+          </div>
+        </div>
       </div>
-      <div className="ml-auto flex items-center space-x-4">
-        <span>Last updated: {currentTime}</span>
-        <button className="text-blue-600 hover:text-blue-800">
-          Help
-        </button>
-      </div>
-    </div>
+    </footer>
   )
 }
