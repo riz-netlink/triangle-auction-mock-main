@@ -1,14 +1,14 @@
 'use client'
 
 import { MainHeader } from '@/components/dashboard/main-header'
-import { ApolloSidebar } from '@/components/dashboard/apollo-sidebar'
+import { AppSidebar } from '@/components/dashboard/app-sidebar'
 import { DashboardFooter } from '@/components/dashboard/dashboard-footer'
 
 export default function DashboardPage() {
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Sidebar - Always positioned as overlay */}
-      <ApolloSidebar />
+      <AppSidebar />
       
       {/* Main Container - Dynamic margin based on sidebar state */}
       <div 
