@@ -13,7 +13,7 @@ export function LayoutClient({
   return (
     <>
       {children}
-      {pathname !== '/login' && pathname !== '/register' && <SiteFooter />}
+      {pathname !== '/login' && pathname !== '/register' && pathname !== '/dashboard' && <SiteFooter />}
     </>
   )
 }

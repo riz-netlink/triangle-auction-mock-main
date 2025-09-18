@@ -8,6 +8,7 @@ import { LanguageSwitcher } from "@/components/language-switcher"
 import { I18nProvider } from "@/components/i18n"
 import { useState, ReactNode } from "react"
 import { Eye, EyeOff, SquareArrowOutUpRight } from "lucide-react"
+import { useRouter } from "next/navigation"
 
 interface I18nProviderProps {
   children: ReactNode;
@@ -15,6 +16,13 @@ interface I18nProviderProps {
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
+  const router = useRouter()
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    // TODO: Add actual login logic here (validate credentials, etc.)
+    router.push('/dashboard') // Redirect to dashboard after login
+  }
 
   return (
     <I18nProvider>
@@ -42,7 +50,7 @@ export default function LoginPage() {
                   Log in to your <b>Triangle Liquidators</b> account.
                 </p>
               </div>
-              <form>
+              <form onSubmit={handleSubmit}>
                 <div className="space-y-4">
                   <div>
                     <Label htmlFor="email" className="mb-1 block">Email</Label>
