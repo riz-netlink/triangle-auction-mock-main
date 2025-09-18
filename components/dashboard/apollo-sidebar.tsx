@@ -120,7 +120,7 @@ export function ApolloSidebar() {
           ${isMobileOpen ? 'fixed top-0 left-0 translate-x-0 z-50' : 'fixed top-0 left-0 -translate-x-full z-50'}
           md:translate-x-0
           ${shouldShowExpanded ? 'w-60' : 'w-16'}
-          ${isPinned ? 'md:fixed md:z-auto' : 'md:fixed md:z-40 md:shadow-lg'}
+          ${isPinned ? 'md:fixed md:z-10' : 'md:fixed md:z-40 md:shadow-lg'}
         `}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}

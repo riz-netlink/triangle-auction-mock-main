@@ -56,10 +56,10 @@ export function ProfileDropdown() {
       <DropdownMenuTrigger asChild>
         <Button 
           variant="ghost" 
-          className="flex items-center space-x-2 px-3 py-2 h-auto hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          className="flex items-center space-x-2 px-3 py-2 h-auto hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 gap-0"
           aria-label="User menu"
         >
-          <Avatar className="h-8 w-8">
+          <Avatar className="h-8 w-8 m-0">
             <AvatarImage src={user.avatar} alt={user.name} />
             <AvatarFallback className="bg-blue-100 text-blue-600 font-medium">
               {user.initials}
@@ -70,14 +70,14 @@ export function ProfileDropdown() {
       </DropdownMenuTrigger>
 
       <DropdownMenuContent 
-        className="w-64 p-0" 
+        className="w-64 p-0 rounded-xl" 
         align="end" 
         sideOffset={8}
         role="menu"
         aria-label="User menu"
       >
         {/* User Info Section */}
-        <div className="px-4 py-3 border-b border-gray-100">
+        <div className="px-4 py-3 rounded-lg border-b border-gray-100">
           <div className="flex items-center space-x-3">
             <Avatar className="h-10 w-10">
               <AvatarImage src={user.avatar} alt={user.name} />
