@@ -6,7 +6,7 @@ import { DashboardFooter } from '@/components/dashboard/dashboard-footer'
 
 export default function DashboardPage() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-slate-50">
       {/* Sidebar - Always positioned as overlay */}
       <ApolloSidebar />
       
@@ -26,6 +26,27 @@ export default function DashboardPage() {
               
               {/* Dashboard Content */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                  <h2 className="text-lg font-semibold text-gray-900 mb-2">Active Auctions</h2>
+                  <p className="text-3xl font-bold text-blue-600">12</p>
+                  <p className="text-sm text-gray-500">Currently running</p>
+                </div>
+                
+                <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                  <h2 className="text-lg font-semibold text-gray-900 mb-2">Total Bidders</h2>
+                  <p className="text-3xl font-bold text-green-600">1,247</p>
+                  <p className="text-sm text-gray-500">Registered users</p>
+                </div>
+                
+                <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                  <h2 className="text-lg font-semibold text-gray-900 mb-2">Revenue</h2>
+                  <p className="text-3xl font-bold text-purple-600">$45,230</p>
+                  <p className="text-sm text-gray-500">This month</p>
+                </div>
+              </div>
+
+                {/* Dashboard Content */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 min-h-dvw">
                 <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
                   <h2 className="text-lg font-semibold text-gray-900 mb-2">Active Auctions</h2>
                   <p className="text-3xl font-bold text-blue-600">12</p>

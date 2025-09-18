@@ -97,7 +97,7 @@ export function ApolloSidebar() {
       <Button
         variant="ghost"
         size="sm"
-        className="fixed top-4 left-4 z-50 md:hidden bg-white shadow-md hover:bg-gray-50"
+        className="fixed top-4 left-4 z-50 md:hidden bg-white shadow-md hover:bg-slate-50"
         onClick={() => setIsMobileOpen(true)}
         aria-label="Open navigation menu"
       >
@@ -142,7 +142,7 @@ export function ApolloSidebar() {
         <div className="flex items-center justify-between p-4 h-14 border-b border-gray-100">
           <div className="flex items-center space-x-3">
             <Image
-              src={shouldShowExpanded ? "/images/triangle-logo.png" : "/images/Logo_triangle_mini.png"}
+              src={shouldShowExpanded ? "/images/triangle-logo.png" : "./images/Logo_triangle_mini.png"}
               alt="Triangle Liquidators"
               width={shouldShowExpanded ? 140 : 32}
               height={shouldShowExpanded ? 32 : 32}
