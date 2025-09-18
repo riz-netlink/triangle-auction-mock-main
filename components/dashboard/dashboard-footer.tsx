@@ -5,22 +5,22 @@ import { Phone, Mail } from 'lucide-react'
 
 export function DashboardFooter() {
   return (
-    <footer className="bg-white border-t border-gray-200 py-4 px-6 mt-auto">
+    <footer className=" border-t border-slate-200 py-1 px-6 mt-auto sticky bottom-0 bg-slate-50">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0">
         {/* Left Section - Contact Info */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-6 space-y-2 sm:space-y-0 text-sm text-gray-600">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-6 space-y-2 sm:space-y-0 text-xs text-gray-600">
           <div className="flex items-center space-x-2">
-            <Phone className="h-4 w-4" />
+            <Phone className="h-3 w-3" />
             <span>+1 (555) 123-4567</span>
           </div>
           <div className="flex items-center space-x-2">
-            <Mail className="h-4 w-4" />
+            <Mail className="h-3 w-3" />
             <span>support@triangleauction.com</span>
           </div>
         </div>
 
         {/* Right Section - Links */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-6 space-y-2 sm:space-y-0 text-sm">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-6 space-y-2 sm:space-y-0 text-xs">
           <div className="flex items-center space-x-4 text-gray-600">
             <Link 
               href="/privacy" 

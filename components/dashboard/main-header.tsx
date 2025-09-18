@@ -10,7 +10,7 @@ export function MainHeader() {
   const [searchQuery, setSearchQuery] = useState('')
 
   return (
-    <header className="sticky top-0 z-20 bg-white border-b border-gray-200 h-14">
+    <header className="sticky top-0 z-20 bg-slate-50 border-b border-slate-200 h-14">
       <div className="flex items-center justify-between h-full px-6">
         {/* Left Section - Search */}
         <div className="flex items-center flex-1 max-w-md">
