@@ -25,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`font-sans ${GeistSans.variable} ${manrope.variable}`}>
+      <body className={`font-sans overflow-x-hidden ${GeistSans.variable} ${manrope.variable}`}>
         <I18nProvider>
           <LayoutClient>{children}</LayoutClient>
         </I18nProvider>

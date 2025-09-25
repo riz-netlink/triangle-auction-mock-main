@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import { ChevronDown, User, LogOut, Settings, Globe } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
@@ -19,6 +20,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
 export function ProfileDropdown() {
   const [selectedLanguage, setSelectedLanguage] = useState('English')
+  const router = useRouter()
 
   // Mock user data - in real app, this would come from auth context
   const user = {
@@ -30,10 +32,16 @@ export function ProfileDropdown() {
   }
 
   const languages = [
-    { code: 'en', name: 'English', flag: '🇺🇸' },
-    { code: 'es', name: 'Español', flag: '🇪🇸' },
-    { code: 'fr', name: 'Français', flag: '🇫🇷' },
-    { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
+    { name: 'English', code: 'en', flag: '🇺🇸' },
+    { name: 'Español', code: 'es', flag: '🇪🇸' },
+    { name: 'Français', code: 'fr', flag: '🇫🇷' },
+    { name: 'Deutsch', code: 'de', flag: '🇩🇪' },
+    { name: '中文', code: 'zh', flag: '🇨🇳' },
+    { name: '日本語', code: 'ja', flag: '🇯🇵' },
+    { name: '한국어', code: 'ko', flag: '🇰🇷' },
+    { name: 'Português', code: 'pt', flag: '🇧🇷' },
+    { name: 'Русский', code: 'ru', flag: '🇷🇺' },
+    { name: 'العربية', code: 'ar', flag: '🇸🇦' },
   ]
 
   const handleLanguageChange = (language: string) => {
@@ -44,6 +52,7 @@ export function ProfileDropdown() {
   const handleLogout = () => {
     // In real app, this would handle logout logic
     console.log('Logging out...')
+    router.push('/')
   }
 
   const handleProfileClick = () => {
@@ -56,7 +65,7 @@ export function ProfileDropdown() {
       <DropdownMenuTrigger asChild>
         <Button 
           variant="ghost" 
-          className="flex items-center space-x-2 px-3 py-2 h-auto hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 gap-0"
+          className="flex items-center space-x-2 px-3 py-2 h-auto hover:bg-grasy-100 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 gap-0"
           aria-label="User menu"
         >
           <Avatar className="h-8 w-8 m-0">
