@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { Phone, Mail } from 'lucide-react'
+import { Phone, Mail,  ExternalLink } from 'lucide-react'
 
 export function DashboardFooter() {
   return (
@@ -24,17 +24,17 @@ export function DashboardFooter() {
           <div className="flex items-center space-x-4 text-gray-600">
             <Link 
               href="/privacy" 
-              className="hover:text-blue-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded"
+              className="flex items-center space-x-2 gap-2 hover:text-blue-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded"
               aria-label="Privacy Policy"
             >
-              Privacy Policy
+              Privacy Policy <ExternalLink className="h-3 w-3" />
             </Link>
             <Link 
               href="/terms" 
-              className="hover:text-blue-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded"
+              className="flex items-center space-x-2 gap-2 hover:text-blue-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded"
               aria-label="Terms & Conditions"
             >
-              Terms & Conditions
+              Terms & Conditions <ExternalLink className="h-3 w-3" />
             </Link>
           </div>
           <div className="text-gray-500">
